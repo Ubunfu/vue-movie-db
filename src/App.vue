@@ -2,14 +2,14 @@
   <div id="app">
     <!-- <Header v-bind:title="title" /> -->
     <Header :title="title" />
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Hello!" v-if="isTrue == true"/>
+    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
+    <MoviesList />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 import Header from './components/Header.vue'
+import MoviesList from './components/MoviesList.vue'
 
 export default {
   name: 'app',
@@ -19,9 +19,9 @@ export default {
       title: 'Movie Database'
     }
   },
-  components: {
-    HelloWorld,
-    Header
+  components: { 
+    Header,
+    MoviesList
   }
 }
 </script>

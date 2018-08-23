@@ -13,12 +13,11 @@ export default {
     },
     data() {
       return {
-          name: "Ryan A"
+          name: "Ryan Allen"
       };
     },
-    computed: {
+    computed: { 
         newTitle: function() {
-            console.log(this);
             return "New Title " + this.name;
         }
     }
