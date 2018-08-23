@@ -1,6 +1,7 @@
 <template>
     <header>
         <h1>{{title}}</h1>
+        <h2>{{newTitle}}</h2>
     </header>    
 </template>
 
@@ -9,6 +10,17 @@ export default {
     name: 'Header',
     props: {
         title: String
+    },
+    data() {
+      return {
+          name: "Ryan A"
+      };
+    },
+    computed: {
+        newTitle: function() {
+            console.log(this);
+            return "New Title " + this.name;
+        }
     }
 };
 </script>
