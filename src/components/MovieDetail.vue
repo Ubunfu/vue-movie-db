@@ -63,7 +63,7 @@ export default {
     padding-top: 50vh;
 }
 .movie-info {
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.7);
     padding: 20px 10%;
     text-align: left;
 }
