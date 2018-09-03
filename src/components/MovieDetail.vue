@@ -59,7 +59,7 @@ export default {
                 this.movie = movie;
                 this.isLoading = false;
             } catch (e) {
-                console.log(e);
+                throw e;
             }
         }
     },

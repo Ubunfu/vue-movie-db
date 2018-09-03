@@ -5,6 +5,9 @@ import './assets/styles.css'
 // Import the Router so I can use it.
 import router from './router';
 
+// Export an event bus to pass events and data between components
+export const bus = new Vue();
+
 Vue.config.productionTip = false
 
 // Render the App

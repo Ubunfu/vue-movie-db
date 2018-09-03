@@ -1,12 +1,8 @@
 <template>
     <div>
-        <div class="search-controls">
-            <label for="searchInput">Search: </label>
-            <input name="searchInput" id="searchInput" type="text">
-            <button type="submit" @click="searchMovies">Go!</button>
-        </div>
+        <SearchTools />
         <ul>
-            <li v-for="movie in movies">
+            <li :key="movie.id" v-for="movie in movies">
                 <Movie :movie="movie" />
             </li>
         </ul>
@@ -14,7 +10,9 @@
 </template>
 
 <script>
-import Movie from './Movie.vue'
+import { bus } from '@/main'
+import Movie from '@/components/Movie'
+import SearchTools from '@/components/SearchTools'
 
 export default {
     name: 'MoviesList',
@@ -24,7 +22,10 @@ export default {
         };
     },
     created: function() {
-      this.getMovies();  
+        bus.$on('searchDone', searchResults => {
+            this.movies = searchResults;
+        });
+        this.getMovies();
     },
     methods: {
         getMovies: async function() {
@@ -36,23 +37,11 @@ export default {
             } catch (e) {
                 // console.error(e);
             }
-        },
-        searchMovies: async function() {
-            try {
-                let query = document.getElementById('searchInput').value;
-                const queryEncoded = encodeURI(query);
-                const resp = await fetch(
-                    `https://api.themoviedb.org/3/search/movie?api_key=b8ee317aa83128da77a8f9baec68b329&language=en-US&query=${queryEncoded}&page=1&include_adult=false`
-                    );
-                const movies = await resp.json();
-                this.movies = movies.results;
-            } catch (e) {
-                console.error(e);
-            }
         }
     },
     components: {
-        Movie
+        Movie,
+        SearchTools
     }
 }
 </script>
