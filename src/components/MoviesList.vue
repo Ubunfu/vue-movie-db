@@ -1,9 +1,15 @@
 <template>
-    <ul>
-        <li v-for="movie in movies">
-            <Movie :movie="movie" />
-        </li>
-    </ul>
+    <div>
+        <div class="search-controls">
+            <input id="searchInput" type="text">
+            <button type="submit" @click="searchMovies">Search</button>
+        </div>
+        <ul>
+            <li v-for="movie in movies">
+                <Movie :movie="movie" />
+            </li>
+        </ul>
+    </div>
 </template>
 
 <script>
@@ -20,15 +26,27 @@ export default {
       this.getMovies();  
     },
     methods: {
-        getMovies: async function () {
+        getMovies: async function() {
             try {
-                // const resp = await fetch('https://api.themoviedb.org/3/movie/550?api_key=b8ee317aa83128da77a8f9baec68b329');
-                const resp = await fetch('https://api.themoviedb.org/3/discover/movie?with_genres=878&with_cast=500&sort_by=vote_average.desc&api_key=b8ee317aa83128da77a8f9baec68b329');
+                const resp = await fetch('https://api.themoviedb.org/3/discover/movie?&sort_by=vote_average.desc&api_key=b8ee317aa83128da77a8f9baec68b329');
                 // const resp = await fetch('https://api.ryanallen.ninja/info/businesscard');
                 const movies = await resp.json();
                 this.movies = movies.results;
             } catch (e) {
                 // console.error(e);
+            }
+        },
+        searchMovies: async function() {
+            try {
+                let query = document.getElementById('searchInput').value;
+                const queryEncoded = encodeURI(query);
+                const resp = await fetch(
+                    `https://api.themoviedb.org/3/search/movie?api_key=b8ee317aa83128da77a8f9baec68b329&language=en-US&query=${queryEncoded}&page=1&include_adult=false`
+                    );
+                const movies = await resp.json();
+                this.movies = movies.results;
+            } catch (e) {
+                console.error(e);
             }
         }
     },
@@ -46,5 +64,8 @@ ul {
     margin: 0;
     grid-row-gap: 1rem;
     grid-template-columns: repeat(4, 1fr);
+}
+.search-controls {
+    padding: 10px 20px;
 }
 </style>

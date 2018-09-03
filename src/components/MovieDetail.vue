@@ -72,7 +72,7 @@ export default {
 <style scoped>
 .movie-wrapper {
     position: relative;
-    padding-top: 50vh;
+    padding-top: 60vh;
 }
 .movie-info {
     background: rgba(0, 0, 0, 0.7);
