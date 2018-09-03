@@ -1,5 +1,5 @@
 <template>
-    <div class="movie-wrapper" :style="wrapperStyles">
+    <div v-if="isLoading == false" class="movie-wrapper" :style="wrapperStyles">
         <div class="movie-info">
             <h1>
                 <a class="title-link" :href="imdbLink">
@@ -17,19 +17,21 @@
             </p>
         </div>
     </div>
+    <Loading v-else />
 </template>
 
 <script>
+import Loading from '@/components/Loading';
+
 const BACKDROP_BASE = 'https://image.tmdb.org/t/p/w1280';
 const IMDB_BASE = 'https://www.imdb.com/title'
+
 export default {
     name: 'Movie Detail',
-    computed: {
-        
-    },
     data() {
         return {
-            movie: {}
+            movie: {},
+            isLoading: true
         }
     },
     computed: {
@@ -55,10 +57,14 @@ export default {
                     );
                 const movie = await resp.json();
                 this.movie = movie;
+                this.isLoading = false;
             } catch (e) {
                 console.log(e);
             }
         }
+    },
+    components: {
+        Loading
     }
 }
 </script>
@@ -83,6 +89,10 @@ export default {
     padding: 0 25px 0 0;
 }
 a:link, a:visited {
- color: inherit;
+    color: inherit;
+    text-decoration: none;
+}
+a:hover {
+    color: #ccc;
 }
 </style>

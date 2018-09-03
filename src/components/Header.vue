@@ -1,6 +1,8 @@
 <template>
     <header>
-        <h1>{{title}}</h1>
+        <router-link to="/">
+            <h1>{{title}}</h1>
+        </router-link>
     </header>    
 </template>
 
@@ -26,5 +28,12 @@ header {
 }
 h1 {
     margin: 0;
+}
+a:link, a:visited {
+    color: inherit;
+    text-decoration: none;
+}
+a:hover {
+    color: #ccc;
 }
 </style>
