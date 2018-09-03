@@ -1,7 +1,6 @@
 <template>
     <header>
         <h1>{{title}}</h1>
-        <h2>{{newTitle}}</h2>
     </header>    
 </template>
 
@@ -15,11 +14,6 @@ export default {
       return {
           name: "Ryan Allen"
       };
-    },
-    computed: { 
-        newTitle: function() {
-            return "New Title " + this.name;
-        }
     }
 };
 </script>

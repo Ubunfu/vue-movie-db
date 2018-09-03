@@ -28,7 +28,7 @@ export default {
                 const movies = await resp.json();
                 this.movies = movies.results;
             } catch (e) {
-                console.error(e);
+                // console.error(e);
             }
         }
     },
