@@ -1,8 +1,10 @@
 <template>
-    <div class="movie-wrapper" :style="styles">
+    <div class="movie-wrapper" :style="wrapperStyles">
         <div class="movie-info">
             <h1>
-                {{movie.title}}
+                <a class="title-link" :href="imdbLink">
+                    {{movie.title}}
+                </a>
             </h1>
             <div class="highlights">
                 <ul>
@@ -19,6 +21,7 @@
 
 <script>
 const BACKDROP_BASE = 'https://image.tmdb.org/t/p/w1280';
+const IMDB_BASE = 'https://www.imdb.com/title'
 export default {
     name: 'Movie Detail',
     computed: {
@@ -30,12 +33,15 @@ export default {
         }
     },
     computed: {
-        styles() {
+        wrapperStyles() {
             return {
                 'background-image': `url(${BACKDROP_BASE}/${this.movie.backdrop_path})`,
                 'background-repeat': 'no-repeat',
                 'background-size': 'cover'
             }
+        },
+        imdbLink() {
+            return `${IMDB_BASE}/${this.movie.imdb_id}`;
         }
     },  
     created: function() {
@@ -75,5 +81,8 @@ export default {
 .highlights ul li {
     display: inline;
     padding: 0 25px 0 0;
+}
+a:link, a:visited {
+ color: inherit;
 }
 </style>
