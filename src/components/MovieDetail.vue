@@ -1,5 +1,6 @@
 <template>
-    <div v-if="isLoading == false" class="movie-wrapper" :style="wrapperStyles">
+    <Loading v-if="isLoading == true"/>
+    <div v-else class="movie-wrapper" :style="wrapperStyles">
         <div class="movie-info">
             <h1>
                 <a class="title-link" :href="imdbLink">
@@ -17,7 +18,6 @@
             </p>
         </div>
     </div>
-    <Loading v-else />
 </template>
 
 <script>

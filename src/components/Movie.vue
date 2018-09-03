@@ -1,8 +1,5 @@
 <template>
     <div>
-        <p>
-            <strong>{{movie.title}}</strong> - {{movie.vote_average}}/10
-        </p>
         <router-link :to="moviePath">
             <img :src="posterImgUrl" :alt="movie.title" />  
         </router-link>
