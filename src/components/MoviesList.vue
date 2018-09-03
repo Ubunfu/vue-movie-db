@@ -1,8 +1,9 @@
 <template>
     <div>
         <div class="search-controls">
-            <input id="searchInput" type="text">
-            <button type="submit" @click="searchMovies">Search</button>
+            <label for="searchInput">Search: </label>
+            <input name="searchInput" id="searchInput" type="text">
+            <button type="submit" @click="searchMovies">Go!</button>
         </div>
         <ul>
             <li v-for="movie in movies">
@@ -67,5 +68,12 @@ ul {
 }
 .search-controls {
     padding: 10px 20px;
+}
+.search-controls input { 
+    margin: 0 5px 0 0;
+}
+.search-controls button {
+    width: 50px;
+    height: 21px;
 }
 </style>
