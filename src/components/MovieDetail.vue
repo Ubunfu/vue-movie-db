@@ -1,12 +1,18 @@
 <template>
-    <div class="body">
-        <h1>
-            {{movie.title}}
-        </h1>
+    <div class="movie-wrapper" :style="styles">
+        <div class="movie-info">
+            <h1>
+                {{movie.title}}
+            </h1>
+            <p>
+                {{movie.overview}}
+            </p>
+        </div>
     </div>
 </template>
 
 <script>
+const BACKDROP_BASE = 'https://image.tmdb.org/t/p/w1280';
 export default {
     name: 'Movie Detail',
     computed: {
@@ -17,6 +23,15 @@ export default {
             movie: {}
         }
     },
+    computed: {
+        styles() {
+            return {
+                'background-image': `url(${BACKDROP_BASE}/${this.movie.backdrop_path})`,
+                'background-repeat': 'no-repeat',
+                'background-size': 'cover'
+            }
+        }
+    },  
     created: function() {
         return this.getMovie();
     },
@@ -37,7 +52,13 @@ export default {
 </script>
 
 <style scoped>
-.body {
-    background: url();
+.movie-wrapper {
+    position: relative;
+    padding-top: 50vh;
+}
+.movie-info {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 20px 10%;
+    text-align: left;
 }
 </style>
