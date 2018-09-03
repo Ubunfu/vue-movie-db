@@ -1,4 +1,4 @@
-# ryanallen-dot-ninja
+# vue-movie-db
 
 ## Project setup
 ```
