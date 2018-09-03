@@ -4,6 +4,12 @@
             <h1>
                 {{movie.title}}
             </h1>
+            <div class="highlights">
+                <ul>
+                    <li>{{movie.release_date}}</li>
+                    <li>{{movie.vote_average}}/10 ({{movie.vote_count}})</li>
+                </ul> 
+            </div>
             <p>
                 {{movie.overview}}
             </p>
@@ -60,5 +66,14 @@ export default {
     background: rgba(0, 0, 0, 0.4);
     padding: 20px 10%;
     text-align: left;
+}
+.highlights ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.highlights ul li {
+    display: inline;
+    padding: 0 25px 0 0;
 }
 </style>
