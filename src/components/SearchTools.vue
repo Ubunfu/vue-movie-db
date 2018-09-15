@@ -1,9 +1,10 @@
 <template>
-    <div class="search-controls">
-        <label for="searchInput">Search: </label>
-        <input name="searchInput" id="searchInput" type="text">
-        <button type="submit" @click="search">Go!</button>
-    </div>
+    <!-- @submit.prevent is an Event Modifier that prevents the page from
+            being reloaded when the form is submitted -->
+    <form class="search-controls" @submit.prevent="search">
+        <input name="searchInput" id="searchInput" type="text" placeholder="Quick search...">
+        <input type="submit" style="display: none"/>
+    </form>
 </template>
 
 <script>
@@ -32,5 +33,23 @@ export default {
 </script>
 
 <style scoped>
-
+/* Style the quick search text box */
+input[type=text] {
+    padding: 0;
+    height: 25px;
+    position: relative;
+    left: 0;
+    outline: none;
+    border: none;
+    /* border-color: rgba(0,0,0,.15); */
+    border-bottom: 1px solid #2ce6d6;
+    background-color:inherit;
+    font-size: 16px;
+    color: inherit;
+    width: 25%;
+    
+}
+::placeholder {
+    color: inherit;
+}
 </style>

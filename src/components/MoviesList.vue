@@ -30,8 +30,7 @@ export default {
     methods: {
         getMovies: async function() {
             try {
-                const resp = await fetch('https://api.themoviedb.org/3/discover/movie?&sort_by=vote_average.desc&api_key=b8ee317aa83128da77a8f9baec68b329');
-                // const resp = await fetch('https://api.ryanallen.ninja/info/businesscard');
+                const resp = await fetch('https://api.themoviedb.org/3/discover/movie?&sort_by=popularity.desc&api_key=b8ee317aa83128da77a8f9baec68b329');
                 const movies = await resp.json();
                 this.movies = movies.results;
             } catch (e) {

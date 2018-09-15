@@ -10,12 +10,20 @@
             <div class="highlights">
                 <ul>
                     <li>{{movie.release_date}}</li>
-                    <li>{{movie.vote_average}}/10 ({{movie.vote_count}})</li>
+                    <li>{{movie.vote_average}}/10 ({{movie.vote_count}} reviews)</li>
+                    <li>{{movie.runtime}} min</li>
+                    <li>{{genres}}</li>
+                    <li>Spoken Languages: {{spokenLangs}}</li>
                 </ul> 
             </div>
-            <p>
-                {{movie.overview}}
-            </p>
+            <div class="description">
+                <div class="tagline">
+                    <p>{{movie.tagline}}</p>
+                </div>
+                <div class="overview">
+                    <p>{{movie.overview}}</p>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -27,7 +35,7 @@ const BACKDROP_BASE = 'https://image.tmdb.org/t/p/w1280';
 const IMDB_BASE = 'https://www.imdb.com/title'
 
 export default {
-    name: 'Movie Detail',
+    name: 'MovieDetail',
     data() {
         return {
             movie: {},
@@ -44,6 +52,30 @@ export default {
         },
         imdbLink() {
             return `${IMDB_BASE}/${this.movie.imdb_id}`;
+        },
+        spokenLangs() {
+            console.log(this.movie);
+            let languages = '';
+            this.movie.spoken_languages.forEach(lang => {
+                if(languages != ''){
+                    languages = `${languages}, ${lang.name}`;
+                } else {
+                    languages = `${lang.name}`;
+                }
+            });
+            return languages;
+        },
+        genres() {
+            console.log(this.movie);
+            let genres = '';
+            this.movie.genres.forEach(genre => {
+                if(genres != ''){
+                    genres = `${genres}, ${genre.name}`;
+                } else {
+                    genres = `${genre.name}`;
+                }
+            });
+            return genres;
         }
     },  
     created: function() {
@@ -70,6 +102,12 @@ export default {
 </script>
 
 <style scoped>
+.description {
+    padding: 10px 0;
+}
+.tagline {
+    font-weight: bold;
+}
 .movie-wrapper {
     position: relative;
     padding-top: 60vh;
@@ -78,6 +116,9 @@ export default {
     background: rgba(0, 0, 0, 0.7);
     padding: 20px 10%;
     text-align: left;
+}
+.highlights {
+    padding: 3px 0;
 }
 .highlights ul {
     list-style: none;
