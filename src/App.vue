@@ -27,10 +27,11 @@ export default {
 
 <style>
 #app {
+  /* Style of default text throughout the entire app */
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; 
   text-align: center;
-  color: #fff;
+  color: #fff; 
 }
 </style>
