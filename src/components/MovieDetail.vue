@@ -10,8 +10,14 @@
             <div class="highlights">
                 <ul>
                     <li>{{movie.release_date}}</li>
-                    <li>{{movie.vote_average}}/10 ({{movie.vote_count}})</li>
+                    <li>{{movie.vote_average}}/10 ({{movie.vote_count}} reviews)</li>
+                    <li>{{movie.runtime}} min</li>
                 </ul> 
+            </div>
+            <div class="highlights">
+                <ul>
+                    <li>Spoken Languages: {{spokenLangs}}</li>
+                </ul>
             </div>
             <p>
                 {{movie.overview}}
@@ -27,7 +33,7 @@ const BACKDROP_BASE = 'https://image.tmdb.org/t/p/w1280';
 const IMDB_BASE = 'https://www.imdb.com/title'
 
 export default {
-    name: 'Movie Detail',
+    name: 'MovieDetail',
     data() {
         return {
             movie: {},
@@ -44,6 +50,18 @@ export default {
         },
         imdbLink() {
             return `${IMDB_BASE}/${this.movie.imdb_id}`;
+        },
+        spokenLangs() {
+            console.log(this.movie);
+            let languages = '';
+            this.movie.spoken_languages.forEach(lang => {
+                if(languages != ''){
+                    languages = `${languages}, ${lang.name}`;
+                } else {
+                    languages = `${lang.name}`;
+                }
+            });
+            return languages;
         }
     },  
     created: function() {
@@ -78,6 +96,9 @@ export default {
     background: rgba(0, 0, 0, 0.7);
     padding: 20px 10%;
     text-align: left;
+}
+.highlights {
+    padding: 3px 0;
 }
 .highlights ul {
     list-style: none;
