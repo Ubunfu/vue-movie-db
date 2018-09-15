@@ -12,16 +12,18 @@
                     <li>{{movie.release_date}}</li>
                     <li>{{movie.vote_average}}/10 ({{movie.vote_count}} reviews)</li>
                     <li>{{movie.runtime}} min</li>
+                    <li>{{genres}}</li>
+                    <li>Spoken Languages: {{spokenLangs}}</li>
                 </ul> 
             </div>
-            <div class="highlights">
-                <ul>
-                    <li>Spoken Languages: {{spokenLangs}}</li>
-                </ul>
+            <div class="description">
+                <div class="tagline">
+                    <p>{{movie.tagline}}</p>
+                </div>
+                <div class="overview">
+                    <p>{{movie.overview}}</p>
+                </div>
             </div>
-            <p>
-                {{movie.overview}}
-            </p>
         </div>
     </div>
 </template>
@@ -62,6 +64,18 @@ export default {
                 }
             });
             return languages;
+        },
+        genres() {
+            console.log(this.movie);
+            let genres = '';
+            this.movie.genres.forEach(genre => {
+                if(genres != ''){
+                    genres = `${genres}, ${genre.name}`;
+                } else {
+                    genres = `${genre.name}`;
+                }
+            });
+            return genres;
         }
     },  
     created: function() {
@@ -88,6 +102,12 @@ export default {
 </script>
 
 <style scoped>
+.description {
+    padding: 10px 0;
+}
+.tagline {
+    font-weight: bold;
+}
 .movie-wrapper {
     position: relative;
     padding-top: 60vh;
