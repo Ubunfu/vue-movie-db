@@ -11,6 +11,7 @@
                 <ul>
                     <li>{{movie.release_date}}</li>
                     <li>{{movie.vote_average}}/10 ({{movie.vote_count}} reviews)</li>
+                    <li>US Rating: {{usRating}}</li>
                     <li>{{movie.runtime}} min</li>
                     <li>{{genres}}</li>
                     <li>Spoken Languages: {{spokenLangs}}</li>
@@ -33,13 +34,17 @@ import Loading from '@/components/Loading';
 
 const BACKDROP_BASE = 'https://image.tmdb.org/t/p/w1280';
 const IMDB_BASE = 'https://www.imdb.com/title'
+const TMDB_API_BASE = 'https://api.themoviedb.org/3';
+const TMDB_API_KEY = 'b8ee317aa83128da77a8f9baec68b329';
 
 export default {
     name: 'MovieDetail',
     data() {
         return {
             movie: {},
-            isLoading: true
+            releaseDates: {},
+            isMovieLoading: true,
+            isReleaseDateLoading: true
         }
     },
     computed: {
@@ -54,7 +59,6 @@ export default {
             return `${IMDB_BASE}/${this.movie.imdb_id}`;
         },
         spokenLangs() {
-            console.log(this.movie);
             let languages = '';
             this.movie.spoken_languages.forEach(lang => {
                 if(languages != ''){
@@ -66,7 +70,6 @@ export default {
             return languages;
         },
         genres() {
-            console.log(this.movie);
             let genres = '';
             this.movie.genres.forEach(genre => {
                 if(genres != ''){
@@ -76,20 +79,82 @@ export default {
                 }
             });
             return genres;
+        },
+        usRating() {
+            let usReleasesFound = false;
+            let usReleases;
+            let usRatingFound = false;
+            let usRating;
+            let i = 0;
+
+            console.log('hi');
+            
+            // Find the US Release Dates
+            while(!usReleasesFound && (i < this.releaseDates.results.length)) {
+                console.log(this.releaseDates.results[i].iso_3166_1);
+                
+                if(this.releaseDates.results[i].iso_3166_1 == 'US') {
+                    usReleases = this.releaseDates.results[i].release_dates;
+                    usReleasesFound = true;
+                    i = 0;
+                } else {
+                    i++;
+                }
+            }
+
+            // If we found US releases, check for one with a Rating
+            if(usReleasesFound) {
+                // Find a populated rating 
+                while(!usRatingFound && (i < usReleases.length)) {
+                    if(usReleases[i].certification != ''){
+                        usRating = usReleases[i].certification;
+                        usRatingFound = true;
+                    } else {
+                        i++;
+                    }
+                }
+            }
+
+            // If we were not able to find a US Rating, set default text
+            if(!usRatingFound) {
+                usRating = 'N/A';
+            }
+
+            return usRating;
+            
+        },
+        isLoading() {
+            let loading = true;
+            if(!this.isMovieLoading && !this.isReleaseDateLoading) {
+                loading = false;
+            }
+            return loading;
         }
     },  
     created: function() {
-        return this.getMovie();
+        this.getReleaseDates();
+        this.getMovie();
+        // return this.getMovie();
     },
     methods: {
         getMovie: async function() {
             try {
                 const resp = await fetch(
-                    `https://api.themoviedb.org/3/movie/${this.$route.params.id}?api_key=b8ee317aa83128da77a8f9baec68b329`
+                    `${TMDB_API_BASE}/movie/${this.$route.params.id}?api_key=${TMDB_API_KEY}`
                     );
                 const movie = await resp.json();
                 this.movie = movie;
-                this.isLoading = false;
+                this.isMovieLoading = false;
+            } catch (e) {
+                throw e;
+            }
+        },
+        getReleaseDates: async function() {
+            try {
+                const resp = await fetch(`${TMDB_API_BASE}/movie/${this.$route.params.id}/release_dates?api_key=${TMDB_API_KEY}`);
+                const releaseDates = await resp.json();
+                this.releaseDates = releaseDates;
+                this.isReleaseDateLoading = false;
             } catch (e) {
                 throw e;
             }
